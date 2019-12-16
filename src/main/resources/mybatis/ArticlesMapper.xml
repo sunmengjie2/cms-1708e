@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sunmengjie.cms.mapper.ArticlesMapper">
+
+	<resultMap type="articles" id="articlesMapper">
+		<result property="channelId" column="channel_id"/> <!-- 栏目  -->
+		<result property="categoryId" column="category_id"/> <!-- 分类  -->
+		<association property="channel" column="channel_id" javaType="com.sunmengjie.cms.entity.Channel" 
+		   select="findChannel"></association>
+		<association property="category" column="category_id" javaType="com.sunmengjie.cms.entity.Category"
+			select="findCategory"></association>
+		<association property="user" column="user_id" javaType="com.sunmengjie.cms.entity.User" 
+			select="com.sunmengjie.cms.mapper.UserMapper.findUserById" ></association>
+	</resultMap>
+	
+	<!-- 通过用户id查询文章 -->
+	<select id="listByUser" resultMap="articlesMapper">
+			SELECT id,title,channel_id,category_id,created,status
+			FROM cms_article 
+			WHERE user_id=#{value}  AND deleted=0 
+			ORDER BY id DESC
+	</select>
+	
+	<!-- 查询栏目  -->
+	<select id="findChannel" resultType="channel">
+		SELECT id,name FROM cms_channel WHERE id=#{value}
+	</select>
+	
+	<!-- 获取分类 -->
+	<select id="findCategory" resultType="category">
+		SELECT id,name FROM cms_category WHERE id=#{value}
+	</select>
+	
+	<select id="findById" resultMap="articlesMapper">
+		SELECT * FROM cms_article WHERE id=#{id} AND deleted=0
+	</select>
+	
+	
+</mapper>

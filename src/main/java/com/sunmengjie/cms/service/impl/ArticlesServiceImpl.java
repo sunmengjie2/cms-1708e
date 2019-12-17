@@ -81,4 +81,33 @@ public class ArticlesServiceImpl implements ArticlesService {
 		return articlesMapper.update(articles);
 	}
 	
+	//文章管理
+	@Override
+	public PageInfo<Articles> list(int status, int pageNum) {
+		PageHelper.startPage(pageNum, CmsContant.PAGE_SIZE);
+		
+		return new PageInfo<Articles>(articlesMapper.list(status));
+	}
+	
+	
+	@Override
+	public int setCheckStatus(int id, int status) {
+		// TODO Auto-generated method stub
+		return articlesMapper.setCheckStatus(id,status);
+	}
+
+	//
+	@Override
+	public Articles getInfoById(int id) {
+		// TODO Auto-generated method stub
+		return articlesMapper.getInfoById(id);
+	}
+	
+	//设置文章   热门  非热门
+	@Override
+	public int setHot(int id, int status) {
+		// TODO Auto-generated method stub
+		return articlesMapper.setHot(id,status);
+	}
+	
 }

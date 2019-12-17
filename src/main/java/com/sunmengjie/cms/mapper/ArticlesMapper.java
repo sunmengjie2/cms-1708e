@@ -61,4 +61,36 @@ public interface ArticlesMapper {
 			+ "category_id=#{categoryId},status=0,updated=now() WHERE id=#{id}")
 	int update(Articles articles);
 
+	List<Articles> list(int status);
+
+	/**
+	 * 
+	 * @param id
+	 * @param status
+	 * @return
+	 */
+	@Update("UPDATE cms_article SET status=#{status} WHERE id=#{id}")
+	int setCheckStatus(@Param("id")int id, @Param("status")int status);
+	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@Select("SELECT id,title,channel_id channelId , category_id categoryId,status ,hot "
+			+ " FROM cms_article WHERE id = #{id}")
+	Articles getInfoById(int id);
+
+	/**
+	 * 
+	 * @param id
+	 * @param status
+	 * @return
+	 */
+	@Update("UPDATE cms_article SET hot=#{hot}  WHERE id=#{id} ")
+	int setHot(@Param("id")int id, @Param("hot")int status);
+
+	
+
+	
 }

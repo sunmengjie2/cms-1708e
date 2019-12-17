@@ -59,10 +59,16 @@ public class UserController {
 	String picUrl;
 	
 
+	/**
+	 * 进入个人中心
+	 * @return
+	 */
 	@RequestMapping("home")
 	public String home() {
 		return "user/home";
 	}
+	
+	
 	
 	/**
 	 * 跳转到注册页面
@@ -159,11 +165,11 @@ public class UserController {
 		//登录成功， 把用户信息存放到session里
 		session.setAttribute(CmsContant.USER_KEY, loginuser);
 		
-		
+		System.out.println(loginuser.getRole());
 		//判断用户是否是管理员  进入管理页面
-		if(user.getRole()==CmsContant.USER_ROLE_ADMIN) {
+		if(loginuser.getRole()==CmsContant.USER_ROLE_ADMIN) {
 			
-			return "redirect:admin/index";
+			return "redirect:/admin/index";
 		}
 		
 		

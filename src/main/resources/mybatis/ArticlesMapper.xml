@@ -38,4 +38,12 @@
 	</select>
 	
 	
+	<!-- 文章管理 -->	
+	<select id="list" resultMap="articlesMapper">
+		SELECT id,title,channel_id,category_id ,user_id, created,status,hot 
+		  FROM cms_article
+		  WHERE status = #{value} AND deleted=0
+		  ORDER BY id DESC
+	</select>
+	
 </mapper>

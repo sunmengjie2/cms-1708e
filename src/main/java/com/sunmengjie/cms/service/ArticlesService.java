@@ -62,6 +62,34 @@ public interface ArticlesService {
 	int update(Articles articles, Integer id);
 
 
+	/**
+	 * 文章管理
+	 * @param status
+	 * @param pageNum
+	 * @return
+	 */
+	PageInfo<Articles> list(int status, int pageNum);
+
+	
+	
+	
+	
+	int setCheckStatus(int id, int status);
+
+	/**
+	 * 获取文章的简要信息  常常用于判断文章的存在性
+	 * @param id
+	 * @return
+	 */
+	Articles getInfoById(int id);
+
+
+	int setHot(int id, int status);
+
+
+
+
+
 
 
 

@@ -42,23 +42,28 @@
   </tbody>
 </table>
 
-<nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <c:forEach begin="1" end="${articlesPage.pages}" varStatus="i">
-		<li class="page-item"><a class="page-link" href="#" onclick="gopage(${i.index})">${i.index}</a></li>
-	</c:forEach>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next" >
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
+
+	<nav aria-label="Page navigation example">
+		  <ul class="pagination justify-content-center">
+		    <li class="page-item">
+		      <a class="page-link" href="#"  onclick="gopage(1)">首页</a>
+		    </li>
+		    <li class="page-item">
+		    <a class="page-link" href="#" onclick="gopage(${articlesPage.prePage==0?1:articlesPage.prePage})">上一页</a>
+		    </li>
+		   	<c:forEach begin="1" end="${articlesPage.pages}" varStatus="i">
+		   		<li class="page-item"><a class="page-link" href="#" onclick="gopage(${i.index})">${i.index}</a></li>
+		   	</c:forEach>
+		    
+		   
+		   <li class="page-item">
+		   <a class="page-link" href="#" onclick="gopage(${articlesPage.nextPage==0?articlesPage.pages:articlesPage.nextPage})">下一页</a>
+		   </li>
+		    <li class="page-item">
+		      <a class="page-link" href="#" onclick="gopage(${articlesPage.pages})">尾页</a>
+		    </li>
+		  </ul>
+	</nav>
 
 <script type="text/javascript">
 

@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
+import com.sunmengjie.cms.entity.Slide;
 
 public interface ArticlesService {
 
@@ -85,6 +86,45 @@ public interface ArticlesService {
 
 
 	int setHot(int id, int status);
+
+
+	/**
+	 * 热门文章
+	 * @param pageNum
+	 * @return
+	 */
+	PageInfo<Articles> hotList(int pageNum);
+
+
+	/**
+	 * 最新文章
+	 * @return
+	 */
+	List<Articles> lastList();
+
+
+	/**
+	 * 轮播图
+	 * @return
+	 */
+	List<Slide> getSlides();
+
+
+	/**
+	 * 获取栏目下的文章
+	 * @param channelId
+	 * @param catId
+	 * @param pageNum
+	 * @return
+	 */
+	PageInfo<Articles> getArticles(int channelId, int catId, int pageNum);
+
+	/**
+	 * 获取栏目下的 分类
+	 * @param channelId
+	 * @return
+	 */
+	List<Category> getCategoriesByChannelId(int channelId);
 
 
 

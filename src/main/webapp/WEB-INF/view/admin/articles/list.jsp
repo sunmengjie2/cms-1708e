@@ -199,7 +199,7 @@
 	
 	$('#articlesContent').on('hidden.bs.modal', function () {
 		  // do something...
-		refreshPage()
+		refreshPage();
 		})
 	
 </script>

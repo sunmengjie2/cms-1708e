@@ -11,7 +11,9 @@ import com.sunmengjie.cms.common.CmsContant;
 import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
+import com.sunmengjie.cms.entity.Slide;
 import com.sunmengjie.cms.mapper.ArticlesMapper;
+import com.sunmengjie.cms.mapper.SlideMapper;
 import com.sunmengjie.cms.service.ArticlesService;
 
 @Service
@@ -20,6 +22,9 @@ public class ArticlesServiceImpl implements ArticlesService {
 	@Autowired
 	private ArticlesMapper articlesMapper;
 
+	@Autowired
+	private SlideMapper slideMapper;
+	
 	/**
 	 * 我的文章
 	 */
@@ -109,5 +114,43 @@ public class ArticlesServiceImpl implements ArticlesService {
 		// TODO Auto-generated method stub
 		return articlesMapper.setHot(id,status);
 	}
+
+	//热门文章
+	@Override
+	public PageInfo<Articles> hotList(int pageNum) {
+		// TODO Auto-generated method stub
+		
+		PageHelper.startPage(pageNum, CmsContant.PAGE_SIZE);
+		return new PageInfo<Articles>(articlesMapper.hotList());
+	}
 	
+	//最新文章
+	@Override
+	public List<Articles> lastList() {
+		// TODO Auto-generated method stub
+		return articlesMapper.lastList(CmsContant.PAGE_SIZE);
+	}
+	
+	//轮播图
+	@Override
+	public List<Slide> getSlides() {
+		// TODO Auto-generated method stub
+		return slideMapper.getSlides();
+	}
+	
+	//获取栏目下的文章
+	@Override
+	public PageInfo<Articles> getArticles(int channelId, int catId, int pageNum) {
+		
+		PageHelper.startPage(pageNum, CmsContant.PAGE_SIZE);
+		
+		return new PageInfo<Articles>(articlesMapper.getArticles(channelId,catId));
+	}
+	
+	//获取栏目下的分类
+	@Override
+	public List<Category> getCategoriesByChannelId(int channelId) {
+		// TODO Auto-generated method stub
+		return articlesMapper.getCategoriesByChannelId(channelId);
+	}
 }

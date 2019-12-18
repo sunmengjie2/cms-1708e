@@ -17,7 +17,7 @@
 	
 	<!-- 通过用户id查询文章 -->
 	<select id="listByUser" resultMap="articlesMapper">
-			SELECT id,title,channel_id,category_id,created,status
+			SELECT id,title,channel_id,category_id,created,status,picture
 			FROM cms_article 
 			WHERE user_id=#{value}  AND deleted=0 
 			ORDER BY id DESC
@@ -40,10 +40,40 @@
 	
 	<!-- 文章管理 -->	
 	<select id="list" resultMap="articlesMapper">
-		SELECT id,title,channel_id,category_id ,user_id, created,status,hot 
+		SELECT id,title,channel_id,category_id ,user_id, created,status,hot,picture
 		  FROM cms_article
 		  WHERE status = #{value} AND deleted=0
 		  ORDER BY id DESC
 	</select>
 	
+	
+	<!-- 获取热门文章 -->
+	<select id="hotList" resultMap="articlesMapper">
+		SELECT id,title,channel_id,category_id ,user_id, created,picture
+		  FROM cms_article
+		  WHERE status = 1 AND deleted=0
+		  			AND hot=1
+		  ORDER BY id DESC
+	</select>
+	
+	<!-- 最新文章 -->
+	<select id="lastList" resultMap="articlesMapper">
+		SELECT id,title,channel_id,category_id ,user_id, created,picture
+		  FROM cms_article
+		  WHERE status = 1 AND deleted=0
+		  			AND hot=1
+		  ORDER BY id DESC
+		  LIMIT #{value}
+	</select>
+	
+	<select id="getArticles" resultMap="articlesMapper">
+		SELECT id,title,channel_id,category_id ,user_id, created,picture
+		  FROM cms_article
+		  WHERE status = 1 AND deleted=0
+		  	AND channel_id=#{channelId}
+		  <if test="catId!=0">
+		  	AND category_id=#{catId}
+		  </if>   
+		  ORDER BY id DESC 
+    </select>
 </mapper>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.ResultType;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -89,6 +90,36 @@ public interface ArticlesMapper {
 	 */
 	@Update("UPDATE cms_article SET hot=#{hot}  WHERE id=#{id} ")
 	int setHot(@Param("id")int id, @Param("hot")int status);
+
+	/**
+	 * 首页  热门文章
+	 * @return
+	 */
+	List<Articles> hotList();
+
+	/**
+	 * 首页   最新文章
+	 * @param pageSize
+	 * @return
+	 */
+	List<Articles> lastList(int pageSize);
+
+	/**
+	 * 根据分类和栏目获取文章
+	 * @param channelId
+	 * @param catId
+	 * @return
+	 */
+	List<Articles> getArticles(@Param("channelId")int channelId, @Param("catId")int catId);
+
+	/**
+	 * 获取栏目下的分类
+	 * @param channelId
+	 * @return
+	 */
+	@Select("SELECT id,name FROM cms_category where channel_id=#{value}")
+	@ResultType(Category.class)
+	List<Category> getCategoriesByChannelId(int channelId);
 
 	
 

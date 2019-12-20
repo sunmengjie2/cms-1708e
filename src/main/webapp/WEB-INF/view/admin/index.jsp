@@ -34,11 +34,10 @@
     
     <div>
     	<ul class="nav">
-    		<li class="nav-item nav-link"> <img width="35px" height="35px" src="/resource/css/img/dt1.gif"> </li>
-    	
+    		<li class="nav-item nav-link"> <img width="35px" height="35px" src="/pic/${user.url }"> </li>
+    		<li class="nav-item nav-link"><font color="red">${user.nickname }</font></li>
     		<li class="nav-item nav-link"></li>
-    		<li class="nav-item nav-link">c</li>
-    		<li class="nav-item nav-link"><a class="nav-link" href="/user/exit">退出</a></li>
+    		<li class="nav-item nav-link"><a  href="/user/exit">退出</a></li>
     	</ul>
     </div>
   </div>
@@ -48,16 +47,19 @@
 		<div class="col-2" style="height: 700px;width: 400px">  <!-- 左侧菜单 -->
 		<nav class="navbar navbar-dark " style="margin-top: 20px;" >
 
-			<!-- <a class="nav-link" href="#"><img alt="" src="/resource/css/img/222.jpg" width="80px" height="100px"></a> -->
+			
 			<ul class="nav flex-column ul1" style="height: 400px; " >
+			  <li class="nav-item ">
+			    <a  class="nav-link active" href="/index">首页</a>
+			  </li>
 			  <li class="nav-item ">
 			    <a  class="nav-link active" href="#" onclick="wordspace($(this),'/admin/articles?status=0&page=1')" >文章管理</a>
 			  </li>
 			  <li class="nav-item">
-		 	   <a class="nav-link" href="#" onclick="wordspace($(this),'/admin/comment')" >评论管理</a>
+		 	   <a class="nav-link" href="#" onclick="wordspace($(this),'/admin/pingl')" >评论管理</a>
 		 	 </li>
 		 	 <li class="nav-item">
-		  	  <a class="nav-link" href="#" onclick="wordspace($(this),'/admin/link')" >友情链接</a>
+		  	  <a class="nav-link" href="#" onclick="wordspace($(this),'/link/getLink')" >友情链接</a>
 		 	 </li>
 		 	 <li class="nav-item">
 		  	  <a class="nav-link" href="#" onclick="wordspace($(this),'/admin/user')" >用户管理</a>

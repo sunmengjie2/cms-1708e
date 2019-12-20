@@ -63,7 +63,7 @@
 	<div class="row">
 		<!-- 左侧栏目 -->
 		<div class="col-md-2">
-			<div>沦落人</div>
+			<div><h3 style="color:#000093">深海Blue鲸</h3></div>
 			<div>
 				<ul class="nav flex-column" >
 					<c:forEach items="${channels}" var="channel">
@@ -101,7 +101,7 @@
 							 >
 						</div>
 						<div class="col-md-9">
-							<a href="/article/detail?id=${article.id}" target="_blank">${article.title}</a>
+							<a href="/articles/detail?id=${article.id}" target="_blank">${article.title}</a>
 							<br>
 							作者：${article.user.username}
 							<br>
@@ -147,7 +147,7 @@
 					  <div class="card-body">
 					     <ol>
 					     	<c:forEach items="${lastArticles}" var="article" varStatus="index">
-					     		<li class="ex"> ${index.index+1}. <a href="/article/detail?id=${article.id}" target="_blank" >${article.title}</a></li>
+					     		<li class="ex"> ${index.index+1}. <a href="/articles/detail?id=${article.id}" target="_blank" >${article.title}</a></li>
 					     	</c:forEach>
 					     	
 					     </ol>

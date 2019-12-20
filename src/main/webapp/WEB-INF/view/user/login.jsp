@@ -78,6 +78,7 @@ function Toregister() {
 			<h3>只有一条路不能选择――那就是放弃。
 				<audio controls="controls"  autoplay="autoplay" loop=-1 preload="auto">
   					<source src="/resource/js/images/chengdu.mp3"  type="audio/mpeg"/>
+  					
 				</audio>
 			</h3>
 			<p>一个简单的系统</p>

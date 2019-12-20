@@ -11,6 +11,7 @@ import com.sunmengjie.cms.common.CmsContant;
 import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
+import com.sunmengjie.cms.entity.Comment;
 import com.sunmengjie.cms.entity.Slide;
 import com.sunmengjie.cms.mapper.ArticlesMapper;
 import com.sunmengjie.cms.mapper.SlideMapper;
@@ -152,5 +153,43 @@ public class ArticlesServiceImpl implements ArticlesService {
 	public List<Category> getCategoriesByChannelId(int channelId) {
 		// TODO Auto-generated method stub
 		return articlesMapper.getCategoriesByChannelId(channelId);
+	}
+	
+	//发表评论
+	@Override
+	public int addComment(Comment comment) {
+		// TODO Auto-generated method stub
+		int resule = articlesMapper.addComment(comment);
+		
+		if(resule>0) {
+			articlesMapper.increaseCommentCnt(comment.getArticleId());
+		}
+		return resule;
+	}
+	
+	//根据文章Id  获取评论
+	@Override
+	public PageInfo<Comment> getComments(int articleId, int pageNum) {
+		// TODO Auto-generated method stub
+		PageHelper.startPage(pageNum, CmsContant.PAGE_SIZE);
+		return new PageInfo<Comment>(articlesMapper.getComments(articleId));
+	}
+	
+	
+	//获取文章的上一篇 和下一篇
+	@Override
+	public Integer  getArticle(int id, int articleId) {
+		
+		
+		
+		if(id<articleId) {
+			Integer aid = articlesMapper.getPreArticle(articleId);
+			return aid;
+		}else {
+			Integer aid = articlesMapper.getNextArticle(articleId);
+			return aid;
+		}
+		
+		
 	}
 }

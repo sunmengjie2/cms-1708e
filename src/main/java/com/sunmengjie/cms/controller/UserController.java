@@ -26,6 +26,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageInfo;
 import com.sunmengjie.cms.common.CmsContant;
+import com.sunmengjie.cms.common.CmsError;
+import com.sunmengjie.cms.common.CmsMessage;
 import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
@@ -175,6 +177,35 @@ public class UserController {
 		
 		//普通用户 进去个人中心
 		return "redirect:home";
+	}
+	
+	/**
+	 * 登录页面发送过来的请求
+	 * @param user
+	 * @param m
+	 * @return
+	 */
+	@RequestMapping(value = "loginIndex",method =RequestMethod.POST)
+	@ResponseBody
+	public CmsMessage loginIndex(String  username,String password,Model m,HttpSession session) {
+		
+		User user = new User();
+		user.setUsername(username);
+		user.setPassword(password);
+		
+		User loginuser = userService.login(user);
+		
+		//登录失败
+		if(loginuser==null) {
+			return new CmsMessage(CmsError.NOT_EXIST, "用户名或密码有误", null);
+		}
+		
+		//登录成功， 把用户信息存放到session里
+		session.setAttribute(CmsContant.USER_KEY, loginuser);
+		
+		
+		
+		return new  CmsMessage(CmsError.SUCCESS, "", "登录成功");
 	}
 	
 	/**

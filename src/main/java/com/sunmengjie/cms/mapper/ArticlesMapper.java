@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Update;
 import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
+import com.sunmengjie.cms.entity.Comment;
 
 public interface ArticlesMapper {
 	
@@ -120,6 +121,41 @@ public interface ArticlesMapper {
 	@Select("SELECT id,name FROM cms_category where channel_id=#{value}")
 	@ResultType(Category.class)
 	List<Category> getCategoriesByChannelId(int channelId);
+
+	
+	/**
+	 * 添加评论
+	 * @param comment
+	 * @return
+	 */
+	@Insert("INSERT INTO cms_comment(articleId,userId,content,created) "
+			+ "VALUES(#{articleId},#{userId},#{content},NOW())")
+	int addComment(Comment comment);
+
+	/**
+	 * 增加文章的评论数量
+	 * @param articleId
+	 */
+	@Update("UPDATE cms_article SET commentCnt=commentCnt+1 WHERE id=#{articleId}")
+	int increaseCommentCnt(int articleId);
+
+	/**
+	 * 根据文章id  获取评论
+	 * @param articleId
+	 * @return
+	 */
+	@Select("SELECT c.id,c.articleId,c.userId,u.username as userName,c.content,c.created FROM cms_comment as c "
+			+ " LEFT JOIN cms_user as u ON u.id=c.userId "
+			+ " WHERE articleId=#{value} ORDER BY c.created DESC ")
+	List<Comment> getComments(int articleId);
+
+	@Select("SELECT id FROM cms_article "
+			+ "  WHERE status=1 AND deleted=0 AND id < #{articleId} ORDER BY id DESC LIMIT 1")
+	Integer getPreArticle(int articleId);
+
+	@Select("SELECT id FROM cms_article "
+			+ " WHERE status=1 AND deleted=0 AND id > #{value} limit 1 ")
+	Integer getNextArticle(int articleId);
 
 	
 

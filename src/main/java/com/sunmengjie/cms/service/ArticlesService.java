@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
+import com.sunmengjie.cms.entity.Comment;
 import com.sunmengjie.cms.entity.Slide;
 
 public interface ArticlesService {
@@ -125,6 +126,25 @@ public interface ArticlesService {
 	 * @return
 	 */
 	List<Category> getCategoriesByChannelId(int channelId);
+
+
+	/**
+	 * 根据文章id 获取评论
+	 * @param articleId  文章id  
+	 * @param page
+	 * @return
+	 */
+	PageInfo<Comment> getComments(int articleId, int pagenNum);
+
+	/**
+	 * 发表评论
+	 * @param comment
+	 * @return
+	 */
+	int addComment(Comment comment);
+
+
+	Integer getArticle(int id, int articleId);
 
 
 

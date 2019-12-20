@@ -5,7 +5,7 @@ public class CmsContant {
 	/**
 	 * 常量类
 	 */
-	public static final String USER_KEY = "session_key";
+	public static final String USER_KEY = "user";
 	
 	//普通用户
 	public static final int USER_ROLE_GENERA=0;

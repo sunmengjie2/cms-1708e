@@ -88,10 +88,11 @@
     </form>
     <div>
     	<ul class="nav" >
-    		<li class="nav-item nav-link"> <img width="35px" height="35px" src="/resource/css/img/dt1.gif"> </li>
-    	
-    		<li class="nav-item nav-link">${session_key.nickname }</li>
-    		<li class="nav-item nav-link">c</li>
+    		<li class="nav-item nav-link"> <img width="35px" height="35px" src="/pic/${user.url }"> </li>
+    		
+    		<li class="nav-item nav-link"><font color="red">${user.nickname }</font></li>
+    		
+    		<!-- <li class="nav-item nav-link">c</li> -->
     		<li class="nav-item nav-link"> <a class="nav-link" href="exit">退出</a></li>
     	</ul>
     </div>
@@ -105,7 +106,7 @@
 		<!-- <a class="nav-link" href="#"><img alt="" src="/resource/css/img/222.jpg" width="80px" height="100px"></a> -->
 		<ul class="nav flex-column ul1" style="height: 500px; width:300px; line-height:30px;" >
 			<li class="nav-item">
-				    <a class="nav-link" href="#">首　　页</a>
+				    <a class="nav-link" href="/">首　　页</a>
 			</li>
 			<li class="nav-item" style="background-color: ">
 			    <a id="postLink" class="nav-link active" href="#" onclick="wordspace($(this),'/user/articles')">我的文章</a>

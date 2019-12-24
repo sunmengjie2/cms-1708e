@@ -44,7 +44,7 @@
 </nav><!--  头结束 -->
 
 	<div class="row">
-		<div class="col-2" style="height: 700px;width: 400px">  <!-- 左侧菜单 -->
+		<div class="col-1" style="height: 700px;width:400px; margin-left: 40px;">  <!-- 左侧菜单 -->
 		<nav class="navbar navbar-dark " style="margin-top: 20px;" >
 
 			

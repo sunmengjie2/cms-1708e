@@ -21,7 +21,7 @@
       <th scope="col">发布时间</th>
       <th scope="col">状态</th>
       <th scope="col">是否热门</th>
-      <th scope="col">操作</th>
+      <th scope="col" width="250px">操作</th>
     </tr>
   </thead>
   <tbody>
@@ -129,20 +129,15 @@
 	
 <!-- </div>     -->
 <script>
-
+var global_article_id;
 
 function sel() {
-		var status = $("#stat").val()
-		alert(status)
-		$("#workcontent").load("/admin/articles?pageNum=" + '${articlesPage.pageNum}' + "&status="+status)
+	var status = $("#stat").val()
+	//alert(status)
+	$("#workcontent").load("/admin/articles?pageNum=" + '${articlesPage.pageNum}' + "&status="+status)
 }
 
 
-
-
-
-
-	var global_article_id;
 	
 	function del(id){
 		alert(id)
@@ -198,11 +193,14 @@ function sel() {
 				alert('操作成功')
 				//隐藏当前的模态框
 				$('#articlesContent').modal('hide')
+				$('#complainModal').modal('hide')
 				//刷新当前的页面
 				//refreshPage();
 				return;	
 			}
 			alert(msg.error);
+			$('#complainModal').modal('hide')
+
 		},
 		"json")
 	}
@@ -219,6 +217,7 @@ function sel() {
 				alert('操作成功')
 				//隐藏当前的模态框
 				$('#articlesContent').modal('hide')
+				$('#complainModal').modal('hide')
 				//刷新当前的页面
 				//refreshPage();
 				return;
@@ -240,7 +239,12 @@ function sel() {
 		$("#workcontent").load("/admin/articles?pageNum=" + '${articlesPage.pageNum}' + "&status="+'${status}');
 	} 
 	
+	//隐藏模态框时刷新页面
 	$('#articlesContent').on('hidden.bs.modal', function () {
+		  // do something...
+		refreshPage();
+		})
+	$('#complainModal').on('hidden.bs.modal', function () {
 		  // do something...
 		refreshPage();
 		})
@@ -249,6 +253,7 @@ function sel() {
 	* 查看文章的投诉
 	*/
 	function complainList(id){
+		global_article_id=id;
 		$("#complainModal").modal('show')
 		$("#complainListDiv").load("/articles/complains?articleId="+id);
 		

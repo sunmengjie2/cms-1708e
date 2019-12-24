@@ -29,7 +29,7 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/articles")
-	public String articles(HttpServletRequest request,int status,
+	public String articles(HttpServletRequest request,@RequestParam(defaultValue = "-1")int status,
 			@RequestParam(defaultValue = "1")int pageNum) {
 		
 		PageInfo<Articles> articlesPage =  articlesService.list(status,pageNum);

@@ -13,7 +13,7 @@ public class Articles {
 	private int userId;
 	private int hits; 		//点击数量
 	private int hot ;		//是否热门
-	private int status;		//文章的状态  0 ，待审核    1 审核通过   2 拒绝 
+	private Integer status;		//文章的状态  0 ，待审核    1 审核通过   2 拒绝 
 	private int deleted; 	// 是否被删除
 	private Date created; 	//创建时间
 	private Date updated; 	// 最后的修改时间
@@ -28,7 +28,7 @@ public class Articles {
 		// TODO Auto-generated constructor stub
 	}
 	public Articles(Integer id, String title, String content, String picture, int channelId, int categoryId, int userId,
-			int hits, int hot, int status, int deleted, Date created, Date updated, int commentCnt, int articleType,
+			int hits, int hot, Integer status, int deleted, Date created, Date updated, int commentCnt, int articleType,
 			Channel channel, Category category, User user) {
 		super();
 		this.id = id;
@@ -104,10 +104,10 @@ public class Articles {
 	public void setHot(int hot) {
 		this.hot = hot;
 	}
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 	public int getDeleted() {

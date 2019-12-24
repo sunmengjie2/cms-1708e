@@ -45,7 +45,8 @@
 		SELECT id,title,channel_id,category_id ,user_id, created,status,hot,picture
 		 FROM cms_article
 		 WHERE
-		  status = #{value} AND deleted=0
+		  deleted=0  
+		  <if test="status!=-1"> AND status = #{status} </if>
 		  ORDER BY id DESC
 	</select>
 	

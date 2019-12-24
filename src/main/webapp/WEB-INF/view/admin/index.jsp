@@ -53,7 +53,7 @@
 			    <a  class="nav-link active" href="/index">首页</a>
 			  </li>
 			  <li class="nav-item ">
-			    <a  class="nav-link active" href="#" onclick="wordspace($(this),'/admin/articles?status=0&page=1')" >文章管理</a>
+			    <a  class="nav-link active" href="#" onclick="wordspace($(this),'/admin/articles?pageNum=1')" >文章管理</a>
 			  </li>
 			  <li class="nav-item">
 		 	   <a class="nav-link" href="#" onclick="wordspace($(this),'/admin/pingl')" >评论管理</a>

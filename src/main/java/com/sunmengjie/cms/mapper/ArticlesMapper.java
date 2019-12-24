@@ -66,7 +66,7 @@ public interface ArticlesMapper {
 			+ "category_id=#{categoryId},status=0,updated=now() WHERE id=#{id}")
 	int update(Articles articles);
 
-	List<Articles> list(int status);
+	List<Articles> list(@Param("status")int status);
 
 	/**
 	 * 

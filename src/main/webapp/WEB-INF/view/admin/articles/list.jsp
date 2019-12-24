@@ -3,12 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- <div class="container-fluid"> -->
-审核状态：<select id="stat">
-			<option value="">全部</option>
-			<option value="0">待审核</option>
-			<option value="1">审核通过</option>
-			<option value="2">审核被拒</option>
+审核状态：<select id="stat" >
+			<option value="" >全部</option>
+			<option value="0" ${status==0?'selected':'' }>待审核</option>
+			<option value="1" ${status==1?"selected":"" }>审核通过</option>
+			<option value="2" ${status==2?"selected":"" }>审核被拒</option>
 		</select>
+		<input type="button" value="查询" onclick="sel()"/>
 	<table class="table">
   <thead class="thead-dark">
     <tr>
@@ -130,14 +131,11 @@
 <script>
 
 
-$(function(){
-	//var stats=$("#stat").val();
-	//alert(stats)
-	$("#stat").change(function(){
-		alert($("#stat").val())
-		$("#workcontent").load("/admin/articles?pageNum=" + '${articlesPage.pageNum}' + "&status="+$("#stat").val())
-	})
-})
+function sel() {
+		var status = $("#stat").val()
+		alert(status)
+		$("#workcontent").load("/admin/articles?pageNum=" + '${articlesPage.pageNum}' + "&status="+status)
+}
 
 
 

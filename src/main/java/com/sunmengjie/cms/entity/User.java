@@ -19,11 +19,11 @@ public class User implements Serializable{
 
 	@NotBlank(message = "用户名不能为空")
 	@Size( min = 3, max = 16,message = "用户名称应该大于等于3且小于等于16")
-	private String username;
+	private String username=null;
 
 	@NotBlank(message = "密码不能为空")
 	@Size(min = 6, max = 10, message = "密码应6-10位")
-	private String password;
+	private String password=null;
 
 	private String nickname;
 	private Date birthday;

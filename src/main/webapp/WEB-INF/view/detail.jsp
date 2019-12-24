@@ -28,7 +28,7 @@
 			分类：${article.category.name}&nbsp;&nbsp;&nbsp;
 			发表时间：<fmt:formatDate value="${article.created}" pattern="yyyy-MM-dd"/> 
 			</h5>
-			
+			&nbsp;&nbsp;&nbsp;<a href="/articles/complain?articleId=${article.id }">投诉</a>
 		</div>
 		<div style="margin-top:30px">
 			${article.content}
@@ -37,10 +37,10 @@
 			<nav aria-label="...">
 					  <ul class="pagination">
 					    <li class="page-item ">
-					      <input type="button" class="btn btn-primary" onclick="pagearticle(${article.id-1},${article.id })" value="上一篇">
+					      <input type="button" class="btn btn-primary" onclick="pagearticle('${article.id-1}','${article.id }')" value="上一篇">
 					    </li>
 					    <li class="page-item">
-					      <input type="button" class="btn btn-primary" onclick="pagearticle(${article.id+1},${article.id })" value="下一篇">
+					      <input type="button" class="btn btn-primary" onclick="pagearticle('${article.id+1}','${article.id }')" value="下一篇">
 					    </li>
 					  </ul>
 					</nav>

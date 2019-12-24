@@ -2,11 +2,14 @@ package com.sunmengjie.cms.service;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.github.pagehelper.PageInfo;
 import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
 import com.sunmengjie.cms.entity.Comment;
+import com.sunmengjie.cms.entity.Complain;
 import com.sunmengjie.cms.entity.Slide;
 
 public interface ArticlesService {
@@ -145,6 +148,12 @@ public interface ArticlesService {
 
 
 	Integer getArticle(int id, int articleId);
+
+
+	int addComplain(@Valid Complain complain);
+
+
+	PageInfo<Complain> getComplains(int articleId, int page);
 
 
 

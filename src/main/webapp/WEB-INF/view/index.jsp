@@ -89,7 +89,7 @@ body {
 						<div class="carousel-inner">
 							<c:forEach items="${slides}" var="slide" varStatus="index">
 								<div class="carousel-item ${index.index==0?'active':''}">
-									<img src="/pic/${slide.picture}" height="400"
+									<img src="/pic/${slide.picture}" height="500"
 										class="d-block w-100" alt="${slide.title}">
 									<div class="carousel-caption d-none d-md-block">
 										<h5>${slide.title}</h5>
@@ -118,7 +118,7 @@ body {
 							<div class="clo-md-3">
 								<img width="150px" height="120px" src="/pic/${article.picture}"
 									onerror="this.src='/resource/css/img/1.jpg'" class="rounded"
-									style="border-radius: 12px !important;">
+									style="border-radius: 12px !important;" />
 							</div>
 							<div class="clo-md-9" style="margin-left: 10px">
 								<a href="/articles/detail?id=${article.id}" target="_blank">${article.title}</a>
@@ -160,8 +160,8 @@ body {
 							</c:forEach>
 
 							<li class="page-item"><a class="page-link"
-								href="/index?pageNum=${articlesPage.nextPage==0?articlesPage.pages:articlesPage.nextPage}" aria-label="Next">
-									<span aria-hidden="true">&raquo;</span>
+								href="/index?pageNum=${articlesPage.nextPage==0?articlesPage.pages:articlesPage.nextPage}"
+								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 							</a></li>
 
 						</ul>
@@ -187,7 +187,7 @@ body {
 							<li><a href="/index?pageNum=${articlesPage.nextPage}">&raquo;</a></li>
 						</ul>
 					</div>
-				</div> --%> 
+				</div> --%>
 				<!-- 分页结束 -->
 
 			</div>
@@ -223,7 +223,7 @@ body {
 	</div>
 
 	<jsp:include page="common/footer.jsp"></jsp:include>
-	
-	
+
+
 </body>
 </html>

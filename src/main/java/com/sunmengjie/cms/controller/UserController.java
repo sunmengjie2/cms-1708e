@@ -8,7 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -154,7 +155,9 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping(value = "login",method =RequestMethod.POST)
-	public String login(User user,Model m,HttpSession session) {
+	public String login(User user,Model m,HttpSession session,HttpServletResponse response) {
+		
+		String pwd = new String(user.getPassword());
 		
 		User loginuser = userService.login(user);
 		
@@ -167,13 +170,23 @@ public class UserController {
 		//登录成功， 把用户信息存放到session里
 		session.setAttribute(CmsContant.USER_KEY, loginuser);
 		
-		System.out.println(loginuser.getRole());
+		//保存用户的用户名和密码
+		Cookie cookieUserName = new Cookie("username", user.getUsername());
+		cookieUserName.setPath("/");
+		cookieUserName.setMaxAge(10*24*3600);  //10天
+		response.addCookie(cookieUserName);
+		
+		Cookie cookieUserPwd = new Cookie("userpwd", pwd);
+		cookieUserPwd.setPath("/");
+		cookieUserPwd.setMaxAge(10*24*3600);  //10天
+		response.addCookie(cookieUserPwd);
+		
+		
 		//判断用户是否是管理员  进入管理页面
 		if(loginuser.getRole()==CmsContant.USER_ROLE_ADMIN) {
 			
 			return "redirect:/admin/index";
 		}
-		
 		
 		//普通用户 进去个人中心
 		return "redirect:home";

@@ -2,6 +2,8 @@ package com.sunmengjie.cms.mapper;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.ResultType;
@@ -12,6 +14,7 @@ import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
 import com.sunmengjie.cms.entity.Comment;
+import com.sunmengjie.cms.entity.Complain;
 
 public interface ArticlesMapper {
 	
@@ -156,6 +159,28 @@ public interface ArticlesMapper {
 	@Select("SELECT id FROM cms_article "
 			+ " WHERE status=1 AND deleted=0 AND id > #{value} limit 1 ")
 	Integer getNextArticle(int articleId);
+
+	/**
+	 * 添加投诉
+	 * @param complain
+	 * @return
+	 */
+	@Insert("INSERT INTO cms_complain(article_id,user_id,complain_type,"
+			+ "compain_option,src_url,picture,content,email,mobile,created)"
+			+ "   VALUES(#{articleId},#{userId},"
+			+ "#{complainType},#{compainOption},#{srcUrl},#{picture},#{content},#{email},#{mobile},now())")
+	int addCoplain(@Valid Complain complain);
+
+	/**
+	 * 	文章投诉数量+1
+	 * @param articleId
+	 */
+	@Update("UPDATE cms_article SET complainCnt=complainCnt+1,status=if(complainCnt>10,2,status)  "
+			+ " WHERE id=#{value}")
+	void increaseComplainCnt(Integer articleId);
+
+	
+	List<Complain> getComplains(int articleId);
 
 	
 

@@ -3,6 +3,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!-- <div class="container-fluid"> -->
+审核状态：<select id="stat">
+			<option value="">全部</option>
+			<option value="0">待审核</option>
+			<option value="1">审核通过</option>
+			<option value="2">审核被拒</option>
+		</select>
 	<table class="table">
   <thead class="thead-dark">
     <tr>
@@ -40,6 +46,7 @@
     			<td width="200px">
     				<input type="button" value="删除"  class="btn btn-danger" onclick="del(${articles.id})">
     				<input type="button" value="审核"  class="btn btn-warning" onclick="check(${articles.id})" >
+    				<input type="button" value="管理投诉"  class="btn btn-warning" onclick="complainList(${articles.id})" >
     			</td>
     		</tr>
        </c:forEach>
@@ -70,7 +77,7 @@
 	</nav>
  
 		
-		 <!-- 审核文章 -->
+<!-- 审核文章 -->
 <div class="modal fade"   id="articlesContent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document" style="margin-left:100px;">
     <div class="modal-content" style="width:1200px;" >
@@ -95,10 +102,48 @@
     </div>
   </div>
 </div>
-
+<!-- 查看投书 -->
+<div class="modal fade"   id="complainModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document" style="margin-left:100px;">
+    <div class="modal-content" style="width:1200px;" >
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">投诉审核</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="complainListDiv">
+         
+         		
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+        <button type="button" class="btn btn-primary" onclick="setStatus(1)">审核通过</button>
+        <button type="button" class="btn btn-primary" onclick="setStatus(2)">审核拒绝</button>
+       
+      </div>
+    </div>
+  </div>
+</div>
 	
 <!-- </div>     -->
 <script>
+
+
+$(function(){
+	//var stats=$("#stat").val();
+	//alert(stats)
+	$("#stat").change(function(){
+		alert($("#stat").val())
+		$("#workcontent").load("/admin/articles?pageNum=" + '${articlesPage.pageNum}' + "&status="+$("#stat").val())
+	})
+})
+
+
+
+
+
+
 	var global_article_id;
 	
 	function del(id){
@@ -195,13 +240,21 @@
 	
 	function refreshPage(){
 		$("#workcontent").load("/admin/articles?pageNum=" + '${articlesPage.pageNum}' + "&status="+'${status}');
-	}
+	} 
 	
 	$('#articlesContent').on('hidden.bs.modal', function () {
 		  // do something...
 		refreshPage();
 		})
 	
+			/**
+	* 查看文章的投诉
+	*/
+	function complainList(id){
+		$("#complainModal").modal('show')
+		$("#complainListDiv").load("/articles/complains?articleId="+id);
+		
+	}
 </script>
 
     

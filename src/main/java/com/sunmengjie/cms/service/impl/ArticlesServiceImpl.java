@@ -2,6 +2,8 @@ package com.sunmengjie.cms.service.impl;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
 import com.sunmengjie.cms.entity.Comment;
+import com.sunmengjie.cms.entity.Complain;
 import com.sunmengjie.cms.entity.Slide;
 import com.sunmengjie.cms.mapper.ArticlesMapper;
 import com.sunmengjie.cms.mapper.SlideMapper;
@@ -191,5 +194,24 @@ public class ArticlesServiceImpl implements ArticlesService {
 		}
 		
 		
+	}
+
+	@Override
+	public int addComplain(@Valid Complain complain) {
+		
+		//添加投诉到数据库
+		int result = articlesMapper.addCoplain(complain);
+		
+		if(result>0) {
+			articlesMapper.increaseComplainCnt(complain.getArticleId());
+		}
+		return 0;
+	}
+	
+	@Override
+	public PageInfo<Complain> getComplains(int articleId, int page) {
+		// TODO Auto-generated method stub
+		PageHelper.startPage(page, CmsContant.PAGE_SIZE);
+		return new PageInfo<Complain>(articlesMapper.getComplains(articleId));
 	}
 }

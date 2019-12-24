@@ -15,6 +15,8 @@
 			select="com.sunmengjie.cms.mapper.UserMapper.findUserById" ></association>
 	</resultMap>
 	
+	
+	
 	<!-- 通过用户id查询文章 -->
 	<select id="listByUser" resultMap="articlesMapper">
 			SELECT id,title,channel_id,category_id,created,status,picture
@@ -38,11 +40,12 @@
 	</select>
 	
 	
-	<!-- 文章管理 -->	
+	<!-- 文章管理  status = #{value}  AND-->	
 	<select id="list" resultMap="articlesMapper">
 		SELECT id,title,channel_id,category_id ,user_id, created,status,hot,picture
-		  FROM cms_article
-		  WHERE status = #{value} AND deleted=0
+		 FROM cms_article
+		 WHERE
+		  status = #{value} AND deleted=0
 		  ORDER BY id DESC
 	</select>
 	
@@ -76,4 +79,20 @@
 		  </if>   
 		  ORDER BY id DESC 
     </select>
+    
+    <resultMap type="complain" id="ComplainMapper">
+		<result column="article_id" property="articleId"/>
+		<result column="complain_type" property="complainType"/>
+		<result column="src_url" property="srcUrl"/>
+		<result column="compain_option" property="compainOption"/>
+		<result column="user_id" property="userId"/>
+		<association column="user_id" property="user" 
+			javaType="com.sunmengjie.cms.entity.User"
+			select="com.sunmengjie.cms.mapper.UserMapper.findUserById"
+		/>
+	</resultMap>
+    
+    <select id="getComplains" resultMap="ComplainMapper">
+		SELECT * FROM cms_complain where article_id=#{value}
+	</select>
 </mapper>

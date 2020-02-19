@@ -7,8 +7,7 @@
   <name>bw-cms-1708e</name>
   <description>这是高仿的今日头条的项目，没有最好，我是更好滴！！！</description>
   
-   <!-- 定义主要版本号 -->
-	<properties>
+<properties>
 		<spring.version>5.1.5.RELEASE</spring.version>
 		<mybatis.version>3.4.2</mybatis.version>
 		<log4j.version>1.2.17</log4j.version>
@@ -17,7 +16,7 @@
 		<mysql.version>5.1.6</mysql.version>
 		<mybatis.spring.version>1.3.0</mybatis.spring.version>
 		<jackson.version>2.9.1</jackson.version>
-		<validator.version>6.0.10.Final</validator.version>
+		<validator.version>5.1.0.Final</validator.version>
 		<poi.version>3.9</poi.version>
 		<jstl.version>1.2</jstl.version>
 		<servlet-api.version>2.5</servlet-api.version>
@@ -31,51 +30,159 @@
 		<aspectj-version>1.8.0</aspectj-version>
 		<!-- 分页助手 -->
 		<pagehelper-version>5.1.2</pagehelper-version>
+
 	</properties>
+
 	<dependencies>
-		<!-- spring 及springMVC -->
+
+		<!-- 解决冲突的依赖 -->
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>1.1.0.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.8.3</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.8.3</version>
+		</dependency>
+
+		<!-- lucene 和es的包,缺一不可 jar依赖 -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>6.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.janeluo</groupId>
+			<artifactId>ikanalyzer</artifactId>
+			<version>2012_u6</version> <!-- 排除自带的lucene操作 -->
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.lucene</groupId>
+					<artifactId>lucene-queries</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.lucene</groupId>
+					<artifactId>lucene-queryparser</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch</groupId>
+			<artifactId>elasticsearch</artifactId>
+			<version>5.6.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.elasticsearch.client</groupId>
+			<artifactId>transport</artifactId>
+			<version>5.6.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-elasticsearch</artifactId>
+			<version>3.0.5.RELEASE</version>
+		</dependency>
+
+
+		<!-- kafka配置 -->
+		<dependency>
+			<groupId>org.springframework.kafka</groupId>
+			<artifactId>spring-kafka</artifactId>
+			<version>2.2.0.RELEASE</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka_2.10</artifactId>
+			<version>0.8.2.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>jmxri</artifactId>
+					<groupId>com.sun.jmx</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jms</artifactId>
+					<groupId>javax.jms</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jmxtools</artifactId>
+					<groupId>com.sun.jdmk</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.7</version>
+		</dependency>
+
+
+		<!-- redis依赖 -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-redis</artifactId>
+			<version>1.8.7.RELEASE</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring-aop</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+	<!-- 工具类 自定义依赖  -->
+		<dependency>
+			<groupId>com.sunmengjie.cms</groupId>
+			  <artifactId>sunmengjie-cms-utils</artifactId>
+			  <version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<!-- 引用版本 -->
 			<version>${spring.version}</version>
 		</dependency>
-		
-		<!-- 自定义依赖  -->
-		<dependency>
-			<groupId>com.sunmengjie.cms</groupId>
-			  <artifactId>sunmengjie-cms-utils</artifactId>
-			  <version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		
+
 		<!-- 加载上下文环境 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<!-- 实例化Bean工厂 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<!-- web 容器 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<!-- MVC 框架 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<!-- 数据库的连接 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -89,35 +196,35 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<!-- 上下文的支持 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<!-- mybatis核心包 -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
 			<version>${mybatis.version}</version>
 		</dependency>
-		
+
 		<!-- mybatis-spring 整合jar -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
 			<version>${mybatis.spring.version}</version>
 		</dependency>
-		
-		<!-- druid数据源  -->
+
+		<!-- druid数据源 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
 			<version>${druid.version}</version>
 		</dependency>
-		
+
 		<!-- Mysql数据库驱动包 -->
 		<dependency>
 			<groupId>mysql</groupId>
@@ -125,27 +232,27 @@
 			<version>${mysql.version}</version>
 		</dependency>
 		<!-- 日志文件管理包 -->
-		
+
 		<!-- log start -->
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>${log4j.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
-		
+
 		<!-- 记录日志的接口 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
 			<version>${log4japi.version}</version>
 		</dependency>
-		
+
 		<!-- slf 与log4j 之间以各接口 -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -160,52 +267,52 @@
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
-		
+
 		<!-- 上传组件包 -->
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>${commons-fileupload.version}</version>
 		</dependency>
-		
+
 		<!-- 文件的传输 -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>${commons-io.version}</version>
 		</dependency>
-		
+
 		<!-- 用于读写excel文件 -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi</artifactId>
 			<version>${poi.version}</version>
 		</dependency>
-		
+
 		<!-- JSP相关 -->
 		<dependency>
 			<groupId>jstl</groupId>
 			<artifactId>jstl</artifactId>
 			<version>${jstl.version}</version>
 		</dependency>
-		
-		
+
+
 		<dependency>
 			<groupId>javax.servlet.jsp</groupId>
 			<artifactId>jsp-api</artifactId>
 			<version>2.2</version>
 			<scope>provided</scope>
 		</dependency>
-		
-		
+
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>${servlet-api.version}</version>
 			<scope>provided</scope>
 		</dependency>
-		
-		<!--  json  解析json -->
+
+		<!-- json 解析json -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -225,14 +332,14 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>${aspectj-version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
 			<version>${aspectj-version}</version>
 		</dependency>
-		
-		<!--  后端数据校验  -->
+
+		<!-- 后端数据校验 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
@@ -247,7 +354,7 @@
 			<version>${pagehelper-version}</version>
 		</dependency>
 
-		<!--  继承spring的测试 -->
+		<!-- 继承spring的测试 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -260,16 +367,16 @@
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.5</version>
 		</dependency>
 	</dependencies>
-  
-  
 
+
+	<!-- 构建项目 -->
 	<build>
 		<plugins>
 			<plugin>
@@ -289,12 +396,12 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.7.v20160115</version>
+				<version>9.4.9.v20180320</version>
 				<configuration>
 					<httpConnector>
-					    <!--  项目端口号 -->
+						<!-- 项目端口号 -->
 						<port>8088</port>
-						 <!--项目路径 -->
+						<!--项目路径 -->
 						<host>localhost</host>
 					</httpConnector>
 					<contextHandlers>
@@ -307,14 +414,14 @@
 							<resourceBase>d:/pic/</resourceBase>
 						</jettyWebAppContext>
 					</contextHandlers>
-				 <scanIntervalSeconds>1</scanIntervalSeconds>
+					<scanIntervalSeconds>1</scanIntervalSeconds>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
-			 <groupId>org.apache.maven.plugins</groupId>
-			 <artifactId>maven-site-plugin</artifactId>
-			 <version>3.7.1</version>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.7.1</version>
 			</plugin>
 
 		</plugins>

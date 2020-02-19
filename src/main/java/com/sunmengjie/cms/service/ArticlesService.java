@@ -4,13 +4,18 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.github.pagehelper.PageInfo;
 import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
+import com.sunmengjie.cms.entity.Collect;
 import com.sunmengjie.cms.entity.Comment;
 import com.sunmengjie.cms.entity.Complain;
 import com.sunmengjie.cms.entity.Slide;
+import com.sunmengjie.cms.entity.User;
 
 public interface ArticlesService {
 
@@ -150,10 +155,53 @@ public interface ArticlesService {
 	Integer getArticle(int id, int articleId);
 
 
-	int addComplain(@Valid Complain complain);
+	int addComplain(Complain complain);
 
 
 	PageInfo<Complain> getComplains(int articleId, int page);
+
+
+	PageInfo<Complain> getComplain(int pageNum, String com, String t1, String t2, String dis);
+
+
+	User getUser(int userId);
+
+
+	Complain getCom(int userId);
+
+
+	List<Articles> findAllArticlesWithStatus(int i);
+
+
+	List<Articles> findByContent(String count);
+
+
+	int addArticle(Articles parseObject);
+
+	//访问量+1
+	int updHits(String substring);
+
+
+	//访问量+1
+	int updaHits(Articles articles);
+
+
+	//查询我的收藏夹文章
+	List<Collect> getCollect(Integer userId, int pageNum);
+
+
+	
+
+	//收藏文章删除
+	int delCollect(int id);
+
+	//收藏
+	int addConllect(String title, String url, Integer id);
+
+
+
+
+	
 
 
 

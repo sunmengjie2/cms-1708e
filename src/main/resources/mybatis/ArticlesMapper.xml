@@ -83,17 +83,30 @@
     
     <resultMap type="complain" id="ComplainMapper">
 		<result column="article_id" property="articleId"/>
-		<result column="complain_type" property="complainType"/>
-		<result column="src_url" property="srcUrl"/>
-		<result column="compain_option" property="compainOption"/>
 		<result column="user_id" property="userId"/>
+		<result column="complaintype" property="complainType"/>
+		<result column="urlip" property="urlip"/>
+		
 		<association column="user_id" property="user" 
 			javaType="com.sunmengjie.cms.entity.User"
 			select="com.sunmengjie.cms.mapper.UserMapper.findUserById"
 		/>
+		<association property="article" column="id" 
+		javaType="com.sunmengjie.cms.entity.Articles" select="com.sunmengjie.cms.mapper.ArticlesMapper.findById">
+		</association>
 	</resultMap>
     
     <select id="getComplains" resultMap="ComplainMapper">
 		SELECT * FROM cms_complain where article_id=#{value}
 	</select>
+	
+	<select id="getComplain" resultMap="ComplainMapper">
+	SELECT b.`id`,b.title,b.content,a.complaintype,b.`complainCnt` FROM cms_complain a 
+	LEFT JOIN cms_article b ON a.`article_id`=b.`id` WHERE b.`complainCnt`>0
+	<if test="com != 0 "> AND a.complaintype =#{com} </if>
+	<if test="t1 != null and t1 != ''"> AND b.`complainCnt`>= #{t1} </if>
+	<if test="t2 !=null and t2 != ''">  AND b.`complainCnt`&lt;= #{t2} </if>
+	 ORDER BY a.created ${dis}
+	</select>
+	
 </mapper>

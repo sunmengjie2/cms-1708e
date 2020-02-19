@@ -63,9 +63,29 @@
 		    <li class="page-item">
 		    <a class="page-link" href="#" onclick="gopage(${articlesPage.prePage==0?1:articlesPage.prePage})">上一页</a>
 		    </li>
-		   	<c:forEach begin="1" end="${articlesPage.pages}" varStatus="i">
+		   <%-- 	<c:forEach begin="1" end="${articlesPage.pages}" varStatus="i">
 		   		<li class="page-item"><a class="page-link" href="#" onclick="gopage(${i.index})">${i.index}</a></li>
-		   	</c:forEach>
+		   	</c:forEach> --%>
+		   	
+		   	<c:forEach
+				begin="${articlesPage.pageNum-2>1?articlesPage.pageNum-2:1}"
+				end="${articlesPage.pageNum+2 >articlesPage.pages ? articlesPage.pages :articlesPage.pageNum+2}"
+				varStatus="index">
+
+				<!-- 当前页码的处理 -->
+				<c:if test="${articlesPage.pageNum==index.index}">
+					<li class="page-item"><a class="page-link"
+						href="#" onclick="gopage(${index.index})"><font color="red">
+								${index.index} </font></a></li>
+				</c:if>
+
+				<!-- 非当前页码的处理 -->
+				<c:if test="${articlesPage.pageNum!=index.index}">
+					<li class="page-item"><a class="page-link"
+						href="#" onclick="gopage(${index.index})"> ${index.index}</a></li>
+				</c:if>
+
+			</c:forEach>
 		    
 		   
 		   <li class="page-item">
@@ -128,7 +148,7 @@
 </div>
 	
 <!-- </div>     -->
-<script>
+<script type="text/javascript">	
 var global_article_id;
 
 function sel() {

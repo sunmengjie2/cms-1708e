@@ -1,11 +1,22 @@
 package com.sunmengjie.cms.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Articles {
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
+//指定索引库的名字和类型（表），注意  库名表名不能用大写，否则报错
+@Document(indexName = "article",type = "article")
+public class Articles implements Serializable{
 
+	@Id
 	private Integer id;
+	//1.是否建立索引   2.数据的分词方式是ik    3.是否存储   4.搜索关键词的分词方式是ik 5. 字段类型是text
+	@Field(index = true,analyzer="ik_smart",store = true,searchAnalyzer = "ik_smart",type =FieldType.text)
 	private String title;	//标题
+	@Field(index = true,analyzer="ik_smart",store = true,searchAnalyzer = "ik_smart",type =FieldType.text)
 	private String content;	//文章的内容
 	private String picture;	//图片的url
 	private int channelId;	//栏目 频道
@@ -20,9 +31,12 @@ public class Articles {
 	private int commentCnt;   // 评论数量
 	private int articleType;  // 文章的类型 文字0     图片  1  
 	
+	private int complainCnt;
+	
 	private Channel channel;	//栏目 频道
 	private Category  category; //分类
 	private User user ;
+	
 	public Articles() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -49,6 +63,14 @@ public class Articles {
 		this.channel = channel;
 		this.category = category;
 		this.user = user;
+	}
+	
+	
+	public int getComplainCnt() {
+		return complainCnt;
+	}
+	public void setComplainCnt(int complainCnt) {
+		this.complainCnt = complainCnt;
 	}
 	public Integer getId() {
 		return id;

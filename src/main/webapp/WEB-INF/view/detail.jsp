@@ -25,25 +25,30 @@
 			<h5>
 			作者：${article.user.username} &nbsp;&nbsp;&nbsp;
 			栏目：${article.channel.name}  &nbsp;&nbsp;&nbsp;
-			分类：${article.category.name}&nbsp;&nbsp;&nbsp;
+			分类：${article.category.name}
 			发表时间：<fmt:formatDate value="${article.created}" pattern="yyyy-MM-dd"/> 
+			&nbsp;&nbsp;&nbsp;
+			访问数量：${article.hits }
 			</h5>
 			&nbsp;&nbsp;&nbsp;<a href="/articles/complain?articleId=${article.id }">投诉</a>
+			&nbsp;&nbsp;&nbsp;
+			<input type="button" onclick="collect('${article.title}')" value="收藏"  />
 		</div>
 		<div style="margin-top:30px">
 			${article.content}
 		</div>
 		<div>
 			<nav aria-label="...">
-					  <ul class="pagination">
-					    <li class="page-item ">
-					      <input type="button" class="btn btn-primary" onclick="pagearticle('${article.id-1}','${article.id }')" value="上一篇">
-					    </li>
-					    <li class="page-item">
-					      <input type="button" class="btn btn-primary" onclick="pagearticle('${article.id+1}','${article.id }')" value="下一篇">
-					    </li>
-					  </ul>
-					</nav>
+			  <ul class="pagination">
+			    <li class="page-item ">
+			      <input type="button" class="btn btn-primary" onclick="pagearticle('${article.id-1}','${article.id }')" value="上一篇">
+			    </li>
+			    <li class="page-item">
+			      <input type="button" class="btn btn-primary" onclick="pagearticle('${article.id+1}','${article.id }')" value="下一篇">
+			    </li>
+			  </ul>
+			 
+			</nav>
 		</div>
 		<div>
 			<!-- 发布评论 -->
@@ -51,6 +56,8 @@
 				
 			</textarea>
 			<input type="button" class="btn btn-primary" onclick="addComment()" value="发表评论">
+			
+			 
 		</div>
 		<div id="comment">
 			
@@ -58,6 +65,20 @@
 	</div>
 </body>
 <script type="text/javascript">
+
+//收藏
+function collect(title) {
+	var url;
+	url=window.location.href;
+	alert(url)
+	$.post("/user/addCollect",{url:url,title:title},function(flag){
+		if(flag){
+			alert('收藏成功')
+		}else{
+			alert('收藏失败')
+		}
+	},"json")
+}
 
 function gopage(page){
 	showComment(page)
@@ -72,7 +93,9 @@ $(function(){
 })
 
 function addComment(){
-	alert($("#commentText").val());
+	//alert($("#commentText").val());
+	
+	
 	
 	 $.post("/articles/postcomment",
 			{articleId:'${article.id}',content:$("#commentText").val()},
@@ -99,5 +122,7 @@ function pagearticle(id,articleId) {
 		}
 	},"json")
 }
+
+
 </script>
 </html>

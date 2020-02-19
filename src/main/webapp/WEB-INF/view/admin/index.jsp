@@ -64,6 +64,9 @@
 		 	 <li class="nav-item">
 		  	  <a class="nav-link" href="#" onclick="wordspace($(this),'/admin/user')" >用户管理</a>
 		 	 </li>
+		 	 <li class="nav-item">
+		  	  <a class="nav-link" href="#" onclick="wordspace($(this),'/admin/complain')" >投诉管理</a>
+		 	 </li>
 			</ul>
 		</nav>
 		</div>

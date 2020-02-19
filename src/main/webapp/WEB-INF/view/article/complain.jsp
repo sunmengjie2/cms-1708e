@@ -24,52 +24,24 @@
 		  </div>
 		<input type="hidden" name="articleId" value="${article.id}">
 		
-		<div class="form-group">
+		
+		  <div class="form-group">
+		   <label >投诉类型</label>
+		   		&nbsp;&nbsp;&nbsp;<input type="checkbox" name="complaintype" value="1"> 涉及黄色
+		   		  &nbsp;&nbsp;&nbsp;<input type="checkbox" name="complaintype" value="2">涉及暴力
+		   		  &nbsp;&nbsp;&nbsp;<input type="checkbox" name="complaintype" value="3"> 涉及违宗教政策
+		   		   &nbsp;&nbsp;&nbsp;<input type="checkbox" name="complaintype" value="4"> 涉及国家安全
+		   		    &nbsp;&nbsp;&nbsp;<input type="checkbox" name="complaintype" value="5"> 抄袭内容
+		   		     &nbsp;&nbsp;&nbsp;<input type="checkbox" name="complaintype" value="6"> 其它
+		 	 <form:errors path="complaintype" cssStyle="color:red"></form:errors>
+		  </div>
+		  
+		  <div class="form-group">
 		   <label >地址</label>
-		    <form:input path="srcUrl" />
-		    <form:errors path="srcUrl" cssStyle="color:red"></form:errors>
+		    <form:input path="urlip" />
+		    <form:errors path="urlip" cssStyle="color:red"></form:errors>
 		 </div>
-		 
-		 <div class="form-group">
-		   <label >投诉类型</label>
-		    <form:select path="complainType" >
-		    	<option value="0">请选择</option>
-		    	<option value="1">政治敏感</option>
-		    	<option value="2">反社会</option>
-		    	<option value="3">涉毒</option>
-		    	<option value="4">涉黄 </option>
-		    </form:select>
-		     <form:errors path="complainType" cssStyle="color:red"></form:errors>
-		 </div>
-		  <div class="form-group">
-		   <label >投诉类型</label>
-		   		&nbsp;&nbsp;&nbsp;<input type="checkbox" name="compainOption" value="1"> 标题夸张
-		   		  &nbsp;&nbsp;&nbsp;<input type="checkbox" name="compainOption" value="2">与事实不符 
-		   		  &nbsp;&nbsp;&nbsp;<input type="checkbox" name="compainOption" value="3"> 疑似抄袭
-		 	 <form:errors path="compainOption" cssStyle="color:red"></form:errors>
-		  </div>
-		  
-		  <div class="form-group">
-		   <label >图片</label>
-		   	<input type="file" name="file">
-		  </div>
-		  <div class="form-group">
-		   <label >内容</label>
-		   	<form:textarea path="content" cols="100" rows="3" />
-		   	 <form:errors path="content" cssStyle="color:red"></form:errors>
-		  </div>
-		  
-		  <div class="form-group">
-		   <label >邮箱</label>
-		   <form:input path="email"/>
-		   	 <form:errors path="email" cssStyle="color:red"></form:errors>
-		  </div>
-		  
-		   <div class="form-group">
-		   <label >电话</label>
-		   <form:input path="mobile"/>
-		   	 <form:errors path="mobile" cssStyle="color:red"></form:errors>
-		 </div>		  
+		  		  
 		<button>提交</button>
 	</form:form>	
 	

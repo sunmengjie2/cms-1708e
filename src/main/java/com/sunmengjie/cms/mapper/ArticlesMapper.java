@@ -13,8 +13,10 @@ import org.apache.ibatis.annotations.Update;
 import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
+import com.sunmengjie.cms.entity.Collect;
 import com.sunmengjie.cms.entity.Comment;
 import com.sunmengjie.cms.entity.Complain;
+import com.sunmengjie.cms.entity.User;
 
 public interface ArticlesMapper {
 	
@@ -165,22 +167,44 @@ public interface ArticlesMapper {
 	 * @param complain
 	 * @return
 	 */
-	@Insert("INSERT INTO cms_complain(article_id,user_id,complain_type,"
-			+ "compain_option,src_url,picture,content,email,mobile,created)"
-			+ "   VALUES(#{articleId},#{userId},"
-			+ "#{complainType},#{compainOption},#{srcUrl},#{picture},#{content},#{email},#{mobile},now())")
-	int addCoplain(@Valid Complain complain);
+	@Insert("INSERT INTO cms_complain(article_id,user_id,complaintype,urlip,created)  VALUES(#{articleId},#{userId},#{complaintype},#{urlip},NOW())")
+	int addCoplain(Complain complain);
 
 	/**
 	 * 	文章投诉数量+1
 	 * @param articleId
 	 */
-	@Update("UPDATE cms_article SET complainCnt=complainCnt+1,status=if(complainCnt>10,2,status)  "
-			+ " WHERE id=#{value}")
-	void increaseComplainCnt(Integer articleId);
+	@Update("UPDATE cms_article SET complainCnt=complainCnt+1,status=if(complainCnt>50,2,status)  "
+			+ " WHERE id=#{articleId}")
+	void increaseComplainCnt(@Param("articleId")Integer articleId);
 
 	
-	List<Complain> getComplains(int articleId);
+	List<Complain> getComplains(@Param("articleId")int articleId);
+
+
+	List<Complain> getComplain(@Param("com")String com, @Param("t1")String t1, @Param("t2")String t2, @Param("dis")String dis);
+
+	@Select("select username from cms_user where id=#{userId}")
+	User getUser(@Param("userId")int userId);
+
+	@Select("select complaintype,urlip cms_complain from user_id = #{userId}")
+	Complain getCom(@Param("userId")int userId);
+
+	@Select("select * from cms_article where status=#{i}")
+	List<Articles> findAllArticlesWithStatus(int i);
+
+	@Insert("INSERT INTO cms_article(title,content,picture,channel_id,category_id,user_id,hits,hot,STATUS,deleted,created,updated,commentCnt,articleType) "
+			+ "VALUES(#{title},#{content},#{picture},#{channelId},#{categoryId},#{userId},#{hits},#{hot},#{status},0,now(),now(),0,#{articleType})")
+	int addArticle(Articles parseObject);
+
+	@Update("UPDATE cms_article SET hits=hits+1 WHERE id=#{id}")
+	int updHits(String substring);
+
+	@Update("UPDATE cms_article SET hits =#{hits} WHERE id=#{id}")
+	int updaHits(Articles articles);
+
+	
+
 
 	
 

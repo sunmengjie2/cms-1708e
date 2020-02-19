@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/data/elasticsearch http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch.xsd
+                            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    
+    <!-- 扫描Dao包，自动创建实例 -->
+	<elasticsearch:repositories base-package="com.sunmengjie.cms.mapper" />
+	<!-- 扫描Service包，创建Service的实体 -->
+	<context:component-scan base-package="com.sunmengjie.cms.service" /> 
+	
+	<!-- 配置elasticSearch的连接 -->
+	<!-- es提供了2个端口号:9200和9300
+		9200:对浏览器暴露的端口号,用浏览器来操作es的crud
+		9300:是对java编程需要操作es所暴露的端口号
+	 -->
+	<elasticsearch:transport-client id="client" cluster-nodes="192.168.37.129:9300" /> 
+	
+	<!-- spring data elasticSearcheDao 必须继承 ElasticsearchTemplate -->
+	<bean id="elasticsearchTemplate"
+		class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+		<constructor-arg name="client" ref="client"></constructor-arg>
+	</bean>
+    
+</beans>

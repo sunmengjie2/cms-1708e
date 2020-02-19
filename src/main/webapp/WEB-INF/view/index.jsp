@@ -135,7 +135,7 @@ body {
 						<ul class="pagination ">
 
 							<li class="page-item"><a class="page-link"
-								href="/index?pageNum=${articlesPage.prePage==0?1:articlesPage.prePage}"
+								href="/index?pageNum=${articlesPage.prePage==0?1:articlesPage.prePage}&key=${key}"
 								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
 							</a></li>
 
@@ -154,13 +154,13 @@ body {
 								<!-- 非当前页码的处理 -->
 								<c:if test="${articlesPage.pageNum!=index.index}">
 									<li class="page-item"><a class="page-link"
-										href="/index?pageNum=${index.index}"> ${index.index}</a></li>
+										href="/index?pageNum=${index.index}&key=${key}"> ${index.index}</a></li>
 								</c:if>
 
 							</c:forEach>
 
 							<li class="page-item"><a class="page-link"
-								href="/index?pageNum=${articlesPage.nextPage==0?articlesPage.pages:articlesPage.nextPage}"
+								href="/index?pageNum=${articlesPage.nextPage==articlesPage.pages+1?articlesPage.pages:articlesPage.nextPage}&key=${key}"
 								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
 							</a></li>
 

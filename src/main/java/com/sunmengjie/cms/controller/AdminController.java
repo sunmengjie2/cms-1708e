@@ -14,6 +14,8 @@ import com.sunmengjie.cms.common.CmsContant;
 import com.sunmengjie.cms.common.CmsError;
 import com.sunmengjie.cms.common.CmsMessage;
 import com.sunmengjie.cms.entity.Articles;
+import com.sunmengjie.cms.entity.Complain;
+import com.sunmengjie.cms.entity.User;
 import com.sunmengjie.cms.service.ArticlesService;
 
 @RequestMapping("/admin")
@@ -32,6 +34,7 @@ public class AdminController {
 	public String articles(HttpServletRequest request,@RequestParam(defaultValue = "-1")int status,
 			@RequestParam(defaultValue = "1")int pageNum) {
 		
+		//System.out.println(status + "///////");
 		PageInfo<Articles> articlesPage =  articlesService.list(status,pageNum);
 		
 		request.setAttribute("status", status);
@@ -41,8 +44,42 @@ public class AdminController {
 	}
 	
 	
+	@RequestMapping("/complain")
+	public String complain(HttpServletRequest request,@RequestParam(defaultValue = "1")int pageNum,
+			@RequestParam(defaultValue = "0")String com,String t1,String t2,
+			@RequestParam(defaultValue = "desc")String dis
+			) {
+		
+		//System.out.println("***********"+dis);
+		//System.out.println("***********"+complaintype);
+		//System.out.println("***********"+t1);
+		PageInfo<Complain> complainPage = articlesService.getComplain(pageNum,com,t1,t2,dis);
+		
+		request.setAttribute("com", com);
+		request.setAttribute("t1", t1);
+		request.setAttribute("t2", t2);
+	
+		request.setAttribute("complainPage", complainPage);
+		
+		return "admin/complaint";
+
+	}
+	
+	@RequestMapping("xqing")
+	public String xqing(HttpServletRequest request,int userId) {
+		User user = articlesService.getUser(userId);
+		
+		Complain comp = articlesService.getCom(userId);
+		
+		request.setAttribute("user", user);
+		
+		request.setAttribute("comp", comp);
+		
+		return "admin/xqing";
+	}
 	
 	
+	//文章审核
 	@RequestMapping("setArticeStatus")
 	@ResponseBody
 	public CmsMessage setsetArticeStatus(int id,int status) {

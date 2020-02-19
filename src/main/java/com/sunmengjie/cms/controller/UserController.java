@@ -15,6 +15,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.alibaba.fastjson.JSON;
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.sunmengjie.cms.common.CmsContant;
 import com.sunmengjie.cms.common.CmsError;
@@ -32,6 +36,7 @@ import com.sunmengjie.cms.common.CmsMessage;
 import com.sunmengjie.cms.entity.Articles;
 import com.sunmengjie.cms.entity.Category;
 import com.sunmengjie.cms.entity.Channel;
+import com.sunmengjie.cms.entity.Collect;
 import com.sunmengjie.cms.entity.User;
 import com.sunmengjie.cms.service.ArticlesService;
 import com.sunmengjie.cms.service.UserService;
@@ -53,6 +58,9 @@ public class UserController {
 	
 	@Autowired
 	private ArticlesService articlesService;
+	
+	@Autowired
+	KafkaTemplate<String, String> kafkaTemplate;
 	
 	
 	@Value("${upload.path}")
@@ -344,6 +352,7 @@ public class UserController {
 	@ResponseBody
 	public boolean deleteArticle(int id) {
 		int result  = articlesService.delete(id);
+		kafkaTemplate.send("article", "del="+String.valueOf(id));
 		return result > 0;
 	}
 	
@@ -402,12 +411,72 @@ public class UserController {
 		//article.setUserId(loginUser.getId());
 		int updateREsult  = articlesService.update(articles,loginUser.getId());
 		
+		//生产者   （发消息   
+		
+		String jsonString = JSON.toJSONString(articles);
+		kafkaTemplate.send("article", "add="+jsonString);
 		
 		return updateREsult>0;
 		
 	}
 	
+	/**
+	 * 我的收藏夹
+	 * @return
+	 */
+	@RequestMapping("collect")
+	public String collect(HttpSession session,@RequestParam(defaultValue = "1")int pageNum,Model m) {
+		
+		//获取当前用户
+		User loginUser = (User) session.getAttribute(CmsContant.USER_KEY);
+		
+		
+		PageHelper.startPage(pageNum, CmsContant.PAGE_SIZE);
+		
+		List<Collect> list = articlesService.getCollect(loginUser.getId(),pageNum);
+		
+		PageInfo<Collect> pageInfo = new PageInfo<Collect>(list);
+		
+		//System.out.println(pageInfo);
+		m.addAttribute("list", list);
+		m.addAttribute("pageInfo", pageInfo);
+		
+		return "user/collect/list";
+	}
 	
+	/**
+	 * 收藏夹删除
+	 */
+	@ResponseBody
+	@RequestMapping("deleteCollect")
+	public boolean delteCollect(int id) {
+		
+		int result = articlesService.delCollect(id);
+		
+		return result>0;
+	}
+	/**
+	 * 添加收藏
+	 */
+	@ResponseBody
+	@RequestMapping("addCollect")
+	public CmsMessage addConllect(String title,String url,HttpSession session) {
+		
+		//获取当前用户
+		User loginUser = (User) session.getAttribute(CmsContant.USER_KEY);
+		if(loginUser==null) {
+			return new CmsMessage(CmsError.NOT_LOGIN, "您尚未登录！", null);
+		}
+		if(StringUtils.isHttpUrl(url)) {
+		
+		int i = articlesService.addConllect(title,url,loginUser.getId());
+		return new CmsMessage(CmsError.SUCCESS,"",i>0);
+		
+		}else {
+			return new CmsMessage(CmsError.NOT_EXIST,"url不合法",null);
+		}
+		
+	}
 	
 	/**
 	 * 

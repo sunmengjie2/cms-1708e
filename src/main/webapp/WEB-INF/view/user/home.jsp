@@ -116,6 +116,9 @@
 			    <a  class="nav-link" href="#" onclick="wordspace($(this),'/user/postArticle')">发布文章</a>
 			</li>
 			<li class="nav-item">
+			    <a class="nav-link" href="#" onclick="wordspace($(this),'/user/collect')">我的收藏夹</a>
+			</li>
+			<li class="nav-item">
 			    <a class="nav-link" href="#" onclick="wordspace($(this),'/user/comments')">消息中心</a>
 			</li>
 			<li class="nav-item">

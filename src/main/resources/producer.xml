@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	    http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/context
+	    http://www.springframework.org/schema/context/spring-context.xsd">
+	    
+	    <!--参数配置 -->
+	<bean id="producerProperties" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<!-- kafka服务地址，可能是集群 value="localhost:9092,localhost:9093,localhost:9094"-->
+				<entry key="bootstrap.servers" value="192.168.37.129:9092" />
+				
+				<!-- 有可能导致broker接收到重复的消息-->
+				<entry key="retries" value="0" />
+				<!-- 每次批量发送消息的数量 -->
+				<entry key="batch.size" value="1638" />
+				<!-- 默认0ms，在异步IO线程被触发后（任何一个topic，partition满都可以触发） -->
+				<entry key="linger.ms" value="1" />
+				
+				<!--producer可以用来缓存数据的内存大小。如果数据产生速度大于向broker发送的速度，producer会阻塞或者抛出异常 -->
+				<entry key="buffer.memory" value="33554432 " />
+				
+				<entry key="key.serializer"
+					value="org.apache.kafka.common.serialization.StringSerializer" />
+					
+				<entry key="value.serializer"
+					value="org.apache.kafka.common.serialization.StringSerializer" />
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<!-- 创建kafkatemplate需要使用的producerfactory bean -->
+	<bean id="producerFactory"
+		class="org.springframework.kafka.core.DefaultKafkaProducerFactory">
+		<constructor-arg>
+			<ref bean="producerProperties" />
+		</constructor-arg>
+	</bean>
+
+	<!-- 创建kafkatemplate bean，使用的时候，只需要注入这个bean，即可使用template的send消息方法 -->
+	<bean id="kafkaTemplate" class="org.springframework.kafka.core.KafkaTemplate">
+		<constructor-arg ref="producerFactory" />
+		<!--设置对应topic 如果主题不存在,会自动创建-->
+		<property name="defaultTopic" value="article" />
+	</bean>
+</beans>

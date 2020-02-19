@@ -17,9 +17,9 @@
       </li> 
     </ul>
     
-    <form class="form-inline my-2 my-lg-0" style="margin-right:30%" >
-      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    <form class="form-inline my-2 my-lg-0" style="margin-right:30%" action="index" method="get">
+      <input class="form-control mr-sm-2" name="key" type="search" value="${key }" placeholder="从es索引库搜索" aria-label="搜索">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
     </form>
     
     <div>
